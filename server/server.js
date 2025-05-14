@@ -161,14 +161,20 @@ app.get('/api/pages/:username', async (req, res) => {
   }
 });
 
+// Fungsi untuk mengkonversi ke timezone Asia/Jakarta
+const convertToJakartaTime = (date) => {
+  return new Date(date.toLocaleString('en-US', { timeZone: 'Asia/Jakarta' }));
+};
+
 const formatTimestamp = (timestamp) => {
-  const date = new Date(timestamp);
-  const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, '0');
-  const day = String(date.getDate()).padStart(2, '0');
-  const hours = String(date.getHours()).padStart(2, '0');
-  const minutes = String(date.getMinutes()).padStart(2, '0');
-  const seconds = String(date.getSeconds()).padStart(2, '0');
+  // Konversi ke waktu Jakarta
+  const jakartaDate = convertToJakartaTime(new Date(timestamp));
+  const year = jakartaDate.getFullYear();
+  const month = String(jakartaDate.getMonth() + 1).padStart(2, '0');
+  const day = String(jakartaDate.getDate()).padStart(2, '0');
+  const hours = String(jakartaDate.getHours()).padStart(2, '0');
+  const minutes = String(jakartaDate.getMinutes()).padStart(2, '0');
+  const seconds = String(jakartaDate.getSeconds()).padStart(2, '0');
   return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 };
 
@@ -230,16 +236,18 @@ app.post('/api/messages/:userId', [
       });
     }
     
+    // Set timestamp ke waktu Jakarta saat ini
+    const jakartaTime = convertToJakartaTime(new Date());
     const [result] = await pool.query(
-      'INSERT INTO messages (user_id, message_text) VALUES (?, ?)',
-      [userId, text]
+      'INSERT INTO messages (user_id, message_text, timestamp) VALUES (?, ?, ?)',
+      [userId, text, jakartaTime]
     );
     
     res.status(201).json({
       data: {
         id: result.insertId,
         message_text: text,
-        timestamp: new Date()
+        timestamp: formatTimestamp(jakartaTime)
       },
       message: 'Pesan berhasil disimpan'
     });

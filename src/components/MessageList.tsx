@@ -3,8 +3,16 @@ import { Message } from '../types';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const formatRelativeTime = (timestamp: string) => {
-  const date = new Date(timestamp);
+  // Parse timestamp dari format "YYYY-MM-DD HH:mm:ss"
+  const [datePart, timePart] = timestamp.split(' ');
+  const [year, month, day] = datePart.split('-').map(Number);
+  const [hours, minutes, seconds] = timePart.split(':').map(Number);
+  
+  // Buat Date object dengan timezone Asia/Jakarta
+  const date = new Date(year, month - 1, day, hours, minutes, seconds);
   const now = new Date();
+  
+  // Konversi ke timestamp untuk perbandingan
   const diffInSeconds = Math.floor((now.getTime() - date.getTime()) / 1000);
 
   if (diffInSeconds < 5) return 'baru saja';
