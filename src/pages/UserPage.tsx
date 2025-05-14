@@ -357,19 +357,21 @@ const UserPage: React.FC = () => {
               </motion.button>
 
               <motion.div
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0 }}
                 animate={{
                   opacity: 1,
-                  y: [0, 8, 0]
+                  rotate: [0, -2, 2, -2, 0],
                 }}
                 transition={{
                   delay: 0.3,
-                  y: {
-                    duration: 2,
+                  rotate: {
+                    duration: 1.5,
                     repeat: Infinity,
+                    repeatDelay: 1,
                     ease: "easeInOut"
                   }
                 }}
+                className="flex items-center"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >

@@ -60,7 +60,7 @@ const pool = mysql.createPool({
   waitForConnections: true,
   connectionLimit: 10,
   queueLimit: 0,
-  timezone: 'Asia/Jakarta'
+  timezone: '+07:00'
 });
 
 // Generate unique username
@@ -161,6 +161,17 @@ app.get('/api/pages/:username', async (req, res) => {
   }
 });
 
+const formatTimestamp = (timestamp) => {
+  const date = new Date(timestamp);
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  const hours = String(date.getHours()).padStart(2, '0');
+  const minutes = String(date.getMinutes()).padStart(2, '0');
+  const seconds = String(date.getSeconds()).padStart(2, '0');
+  return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+};
+
 // Get messages for specific user
 app.get('/api/messages/:userId', async (req, res) => {
   try {
@@ -177,7 +188,7 @@ app.get('/api/messages/:userId', async (req, res) => {
       data: rows.map(row => ({
         id: row.id,
         message_text: row.message_text,
-        timestamp: row.timestamp
+        timestamp: formatTimestamp(row.timestamp)
       }))
     });
   } catch (error) {

@@ -63,7 +63,6 @@ const Home: React.FC = () => {
         animate={{ opacity: 1 }}
         className="relative overflow-hidden py-8 sm:py-12"
       >
-        <div className="absolute inset-0 bg-gradient-to-b from-slate-900 to-slate-950"></div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -90,7 +89,7 @@ const Home: React.FC = () => {
             </motion.p>
             
             <motion.div 
-              className="bg-slate-900/80 backdrop-blur-lg rounded-2xl p-8 shadow-xl border border-slate-800 mb-8"
+              className="bg-slate-900 rounded-2xl p-8 shadow-xl border border-slate-800 mb-8"
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.5 }}
@@ -179,8 +178,8 @@ const Home: React.FC = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-3xl mx-auto">
             <motion.div 
-              className="bg-slate-900/50 backdrop-blur-sm rounded-xl p-6 border border-slate-800/50
-                hover:bg-slate-900/70 hover:border-slate-700/50 transition-all duration-300"
+              className="bg-slate-900 rounded-xl p-6 border border-slate-800
+                hover:bg-slate-900 hover:border-slate-700 transition-all duration-300"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.7 }}
@@ -205,8 +204,8 @@ const Home: React.FC = () => {
             </motion.div>
 
             <motion.div 
-              className="bg-slate-900/50 backdrop-blur-sm rounded-xl p-6 border border-slate-800/50
-                hover:bg-slate-900/70 hover:border-slate-700/50 transition-all duration-300"
+              className="bg-slate-900 rounded-xl p-6 border border-slate-800
+                hover:bg-slate-900 hover:border-slate-700 transition-all duration-300"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.8 }}

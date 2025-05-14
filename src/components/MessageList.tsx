@@ -2,6 +2,33 @@ import React from 'react';
 import { Message } from '../types';
 import { motion, AnimatePresence } from 'framer-motion';
 
+const formatRelativeTime = (timestamp: string) => {
+  const date = new Date(timestamp);
+  const now = new Date();
+  const diffInSeconds = Math.floor((now.getTime() - date.getTime()) / 1000);
+
+  if (diffInSeconds < 5) return 'baru saja';
+  if (diffInSeconds < 60) return `${diffInSeconds} detik yang lalu`;
+  
+  const diffInMinutes = Math.floor(diffInSeconds / 60);
+  if (diffInMinutes < 60) return `${diffInMinutes} menit yang lalu`;
+  
+  const diffInHours = Math.floor(diffInMinutes / 60);
+  if (diffInHours < 24) return `${diffInHours} jam yang lalu`;
+  
+  const diffInDays = Math.floor(diffInHours / 24);
+  if (diffInDays < 7) return `${diffInDays} hari yang lalu`;
+  
+  const diffInWeeks = Math.floor(diffInDays / 7);
+  if (diffInWeeks < 4) return `${diffInWeeks} minggu yang lalu`;
+  
+  const diffInMonths = Math.floor(diffInDays / 30);
+  if (diffInMonths < 12) return `${diffInMonths} bulan yang lalu`;
+  
+  const diffInYears = Math.floor(diffInDays / 365);
+  return `${diffInYears} tahun yang lalu`;
+};
+
 interface MessageListProps {
   messages: Message[];
   isLoading?: boolean;
@@ -121,17 +148,12 @@ const MessageList: React.FC<MessageListProps> = ({ messages, isLoading = false }
                   d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
                 />
               </svg>
-              <time dateTime={message.timestamp} className="font-medium">
-                {message.relativeTime}
-                <span className="hidden sm:inline ml-2 text-slate-500">
-                  ({new Date(message.timestamp).toLocaleString('id-ID', {
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric',
-                    hour: '2-digit',
-                    minute: '2-digit'
-                  })})
-                </span>
+              <time 
+                dateTime={message.timestamp} 
+                title={message.timestamp}
+                className="font-medium"
+              >
+                {formatRelativeTime(message.timestamp)}
               </time>
             </motion.div>
           </motion.div>

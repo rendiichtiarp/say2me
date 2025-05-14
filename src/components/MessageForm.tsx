@@ -101,7 +101,7 @@ const MessageForm: React.FC<MessageFormProps> = ({ onSubmit, isLoading }) => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3 }}
         >
-          Bagikan Pikiran Anda
+          Kirim pesan kepada pengguna
         </motion.label>
         
         <div className={`relative rounded-lg sm:rounded-xl overflow-hidden transition-all duration-300 
@@ -110,8 +110,8 @@ const MessageForm: React.FC<MessageFormProps> = ({ onSubmit, isLoading }) => {
             : 'ring-1 ring-slate-700/50'
           }`}
         >
-          <textarea
-            ref={textareaRef}
+        <textarea
+          ref={textareaRef}
             id="message"
             name="message"
             rows={4}
@@ -127,7 +127,7 @@ const MessageForm: React.FC<MessageFormProps> = ({ onSubmit, isLoading }) => {
             onBlur={() => setIsFocused(false)}
             disabled={isLoading}
             maxLength={1000}
-          />
+        />
           
           <div className="absolute bottom-3 sm:bottom-4 right-3 sm:right-4 flex items-center space-x-2 sm:space-x-3">
             <div className={`text-xs sm:text-sm font-medium ${getCharacterCountColor()}`}>
@@ -136,7 +136,7 @@ const MessageForm: React.FC<MessageFormProps> = ({ onSubmit, isLoading }) => {
           </div>
         </div>
       </motion.div>
-
+      
       <motion.div 
         className="flex flex-col sm:flex-row items-start sm:items-center justify-between space-y-3 sm:space-y-0"
         initial={{ opacity: 0 }}
@@ -144,7 +144,7 @@ const MessageForm: React.FC<MessageFormProps> = ({ onSubmit, isLoading }) => {
         transition={{ delay: 0.2 }}
       >
         <motion.div 
-          className="flex items-center space-x-2 text-xs sm:text-sm text-slate-400"
+          className="hidden sm:flex items-center space-x-2 text-xs sm:text-sm text-slate-400"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.3 }}
