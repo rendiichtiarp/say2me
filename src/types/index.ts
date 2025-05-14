@@ -2,6 +2,7 @@ export interface Message {
   id: string;
   text: string;
   timestamp: string;
+  relativeTime: string;
   status?: 'sending' | 'sent' | 'error';
   error?: string;
 }

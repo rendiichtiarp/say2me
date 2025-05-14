@@ -122,13 +122,16 @@ const MessageList: React.FC<MessageListProps> = ({ messages, isLoading = false }
                 />
               </svg>
               <time dateTime={message.timestamp} className="font-medium">
-                {new Date(message.timestamp).toLocaleString('id-ID', {
-                  year: 'numeric',
-                  month: 'long',
-                  day: 'numeric',
-                  hour: '2-digit',
-                  minute: '2-digit'
-                })}
+                {message.relativeTime}
+                <span className="hidden sm:inline ml-2 text-slate-500">
+                  ({new Date(message.timestamp).toLocaleString('id-ID', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                  })})
+                </span>
               </time>
             </motion.div>
           </motion.div>

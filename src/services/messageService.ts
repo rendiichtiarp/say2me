@@ -1,4 +1,6 @@
 import { Message, ApiMessage, ApiResponse, ApiError } from '../types';
+import { formatDistanceToNow } from 'date-fns';
+import { id } from 'date-fns/locale';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001';
 
@@ -42,6 +44,7 @@ export const fetchMessages = async (page: number): Promise<Message[]> => {
       id: msg.id.toString(),
       text: msg.message_text,
       timestamp: new Date(msg.timestamp).toISOString(),
+      relativeTime: formatDistanceToNow(new Date(msg.timestamp), { addSuffix: true, locale: id }),
       status: 'sent'
     }));
   } catch (error) {
@@ -85,6 +88,7 @@ export const postMessage = async (text: string): Promise<Message> => {
       id: data.data.id.toString(),
       text: data.data.message_text,
       timestamp: new Date(data.data.timestamp).toISOString(),
+      relativeTime: formatDistanceToNow(new Date(data.data.timestamp), { addSuffix: true, locale: id }),
       status: 'sent'
     };
   } catch (error) {
