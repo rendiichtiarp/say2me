@@ -63,34 +63,6 @@ const pool = mysql.createPool({
   timezone: 'Asia/Jakarta'
 });
 
-// Initialize database
-const initDatabase = async () => {
-  try {
-    // Read and execute migration file
-    const migrationPath = path.join(__dirname, '..', 'supabase', 'migrations', '20250514033603_tiny_garden.sql');
-    const migration = await fs.readFile(migrationPath, 'utf8');
-    
-    // Split migration into individual statements
-    const statements = migration
-      .split(';')
-      .map(statement => statement.trim())
-      .filter(statement => statement.length > 0);
-    
-    // Execute each statement
-    for (const statement of statements) {
-      await pool.query(statement);
-    }
-    
-    console.log('Database initialized successfully');
-  } catch (error) {
-    console.error('Database initialization error:', error);
-    process.exit(1); // Exit if database initialization fails
-  }
-};
-
-// Initialize database on startup
-initDatabase();
-
 // Generate unique username
 const generateUniqueUsername = async () => {
   const adjectives = ['happy', 'lucky', 'sunny', 'clever', 'bright', 'kind', 'wise', 'brave'];
