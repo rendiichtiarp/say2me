@@ -1,0 +1,102 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-slate-950 text-slate-100;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+@layer components {
+  /* Animasi loading */
+  .animate-pulse {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  /* Animasi fade in */
+  .animate-fadeIn {
+    animation: fadeIn 0.3s ease-out forwards;
+  }
+
+  /* Animasi hover */
+  .hover-scale {
+    @apply transition-transform duration-200;
+  }
+
+  .hover-scale:hover {
+    @apply transform scale-105;
+  }
+
+  /* Animasi scroll */
+  .scroll-fade {
+    @apply transition-opacity duration-300;
+  }
+
+  .scroll-fade.hidden {
+    @apply opacity-0;
+  }
+
+  /* Animasi form */
+  .form-focus {
+    @apply transition-shadow duration-200;
+  }
+
+  .form-focus:focus {
+    @apply ring-2 ring-slate-700;
+  }
+
+  /* Animasi button */
+  .button-press {
+    @apply transform transition-transform duration-100;
+  }
+
+  .button-press:active {
+    @apply scale-95;
+  }
+}
+
+@layer utilities {
+  @keyframes pulse {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.5;
+    }
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .message-card:nth-child(1) {
+    animation-delay: 0.05s;
+  }
+
+  .message-card:nth-child(2) {
+    animation-delay: 0.1s;
+  }
+
+  .message-card:nth-child(3) {
+    animation-delay: 0.15s;
+  }
+
+  .message-card:nth-child(4) {
+    animation-delay: 0.2s;
+  }
+
+  .message-card:nth-child(5) {
+    animation-delay: 0.25s;
+  }
+}
