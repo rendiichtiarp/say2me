@@ -2,39 +2,43 @@ import React from 'react';
 import { Message } from '../types';
 import { motion, AnimatePresence } from 'framer-motion';
 
-const formatRelativeTime = (timestamp: string) => {
-  // Parse timestamp dari format "YYYY-MM-DD HH:mm:ss"
-  const [datePart, timePart] = timestamp.split(' ');
-  const [year, month, day] = datePart.split('-').map(Number);
-  const [hours, minutes, seconds] = timePart.split(':').map(Number);
+const formatRelativeTime = (timestamp: string | undefined) => {
+  if (!timestamp) return 'waktu tidak diketahui';
   
-  // Buat Date object dengan timezone Asia/Jakarta
-  const date = new Date(year, month - 1, day, hours, minutes, seconds);
-  const now = new Date();
-  
-  // Konversi ke timestamp untuk perbandingan
-  const diffInSeconds = Math.floor((now.getTime() - date.getTime()) / 1000);
+  try {
+    const date = new Date(timestamp);
+    const now = new Date();
+    
+    if (isNaN(date.getTime())) {
+      return 'waktu tidak valid';
+    }
+    
+    const diffInSeconds = Math.floor((now.getTime() - date.getTime()) / 1000);
 
-  if (diffInSeconds < 5) return 'baru saja';
-  if (diffInSeconds < 60) return `${diffInSeconds} detik yang lalu`;
-  
-  const diffInMinutes = Math.floor(diffInSeconds / 60);
-  if (diffInMinutes < 60) return `${diffInMinutes} menit yang lalu`;
-  
-  const diffInHours = Math.floor(diffInMinutes / 60);
-  if (diffInHours < 24) return `${diffInHours} jam yang lalu`;
-  
-  const diffInDays = Math.floor(diffInHours / 24);
-  if (diffInDays < 7) return `${diffInDays} hari yang lalu`;
-  
-  const diffInWeeks = Math.floor(diffInDays / 7);
-  if (diffInWeeks < 4) return `${diffInWeeks} minggu yang lalu`;
-  
-  const diffInMonths = Math.floor(diffInDays / 30);
-  if (diffInMonths < 12) return `${diffInMonths} bulan yang lalu`;
-  
-  const diffInYears = Math.floor(diffInDays / 365);
-  return `${diffInYears} tahun yang lalu`;
+    if (diffInSeconds < 5) return 'baru saja';
+    if (diffInSeconds < 60) return `${diffInSeconds} detik yang lalu`;
+    
+    const diffInMinutes = Math.floor(diffInSeconds / 60);
+    if (diffInMinutes < 60) return `${diffInMinutes} menit yang lalu`;
+    
+    const diffInHours = Math.floor(diffInMinutes / 60);
+    if (diffInHours < 24) return `${diffInHours} jam yang lalu`;
+    
+    const diffInDays = Math.floor(diffInHours / 24);
+    if (diffInDays < 7) return `${diffInDays} hari yang lalu`;
+    
+    const diffInWeeks = Math.floor(diffInDays / 7);
+    if (diffInWeeks < 4) return `${diffInWeeks} minggu yang lalu`;
+    
+    const diffInMonths = Math.floor(diffInDays / 30);
+    if (diffInMonths < 12) return `${diffInMonths} bulan yang lalu`;
+    
+    const diffInYears = Math.floor(diffInDays / 365);
+    return `${diffInYears} tahun yang lalu`;
+  } catch (error) {
+    console.error('Error formatting time:', error);
+    return 'waktu tidak valid';
+  }
 };
 
 interface MessageListProps {
@@ -121,12 +125,9 @@ const MessageList: React.FC<MessageListProps> = ({ messages, isLoading = false }
             initial="hidden"
             animate="visible"
             exit="exit"
-            className="group relative bg-slate-800/50 rounded-lg sm:rounded-xl p-4 sm:p-6 
-              shadow-sm hover:shadow-md transition-all duration-300 border border-slate-700/50
-              hover:bg-slate-800/70 hover:border-slate-600/50
-              before:absolute before:inset-0 before:rounded-lg sm:before:rounded-xl 
-              before:bg-gradient-to-r before:from-blue-500/5 before:to-indigo-500/5 
-              before:opacity-0 before:transition-opacity hover:before:opacity-100"
+            className="group relative bg-slate-900 rounded-lg sm:rounded-xl p-4 sm:p-6 
+              shadow-sm hover:shadow-md transition-all duration-300 border border-slate-800
+              hover:bg-slate-900 hover:border-slate-700"
           >
             <motion.p 
               className="relative text-sm sm:text-base text-slate-100 leading-relaxed mb-3 sm:mb-4
@@ -157,11 +158,11 @@ const MessageList: React.FC<MessageListProps> = ({ messages, isLoading = false }
                 />
               </svg>
               <time 
-                dateTime={message.timestamp} 
-                title={message.timestamp}
+                dateTime={message.timestamp?.toString()} 
+                title={message.timestamp?.toString()}
                 className="font-medium"
               >
-                {formatRelativeTime(message.timestamp)}
+                {formatRelativeTime(message.timestamp?.toString())}
               </time>
             </motion.div>
           </motion.div>
