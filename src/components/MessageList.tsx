@@ -91,17 +91,21 @@ const MessageList: React.FC<MessageListProps> = ({ messages, isLoading = false }
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3, delay: i * 0.1 }}
-            className="animate-pulse bg-slate-800/50 rounded-lg sm:rounded-xl p-4 sm:p-6 
-              shadow-sm border border-slate-700/50"
+            className="relative group"
           >
-            <div className="space-y-2 sm:space-y-3">
-              <div className="h-3 sm:h-4 bg-slate-700/50 rounded-full w-3/4"></div>
-              <div className="h-3 sm:h-4 bg-slate-700/50 rounded-full w-1/2"></div>
-              <div className="h-3 sm:h-4 bg-slate-700/50 rounded-full w-5/6"></div>
-            </div>
-            <div className="mt-3 sm:mt-4 flex items-center space-x-2">
-              <div className="h-3 sm:h-4 w-3 sm:w-4 bg-slate-700/50 rounded-full"></div>
-              <div className="h-2.5 sm:h-3 bg-slate-700/50 rounded-full w-20 sm:w-24"></div>
+            <div className="absolute -inset-0.5 bg-gradient-to-r from-blue-200 via-indigo-200 to-purple-200 
+              rounded-2xl blur opacity-25 group-hover:opacity-75 transition duration-500" />
+            <div className="relative p-6 bg-white/90 backdrop-blur-xl rounded-2xl
+              border border-slate-200 shadow-[0_8px_30px_rgb(0,0,0,0.08)]">
+              <div className="space-y-3">
+                <div className="h-4 bg-slate-200/80 rounded-full w-3/4 animate-pulse" />
+                <div className="h-4 bg-slate-200/80 rounded-full w-1/2 animate-pulse" />
+                <div className="h-4 bg-slate-200/80 rounded-full w-5/6 animate-pulse" />
+              </div>
+              <div className="mt-4 flex items-center space-x-2">
+                <div className="h-4 w-4 bg-slate-200/80 rounded-full animate-pulse" />
+                <div className="h-3 bg-slate-200/80 rounded-full w-24 animate-pulse" />
+              </div>
             </div>
           </motion.div>
         ))}
@@ -125,46 +129,52 @@ const MessageList: React.FC<MessageListProps> = ({ messages, isLoading = false }
             initial="hidden"
             animate="visible"
             exit="exit"
-            className="group relative bg-slate-900 rounded-lg sm:rounded-xl p-4 sm:p-6 
-              shadow-sm hover:shadow-md transition-all duration-300 border border-slate-800
-              hover:bg-slate-900 hover:border-slate-700"
+            className="relative group"
           >
-            <motion.p 
-              className="relative text-sm sm:text-base text-slate-100 leading-relaxed mb-3 sm:mb-4
-                whitespace-pre-wrap break-words"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.1 }}
-            >
-              {message.text}
-            </motion.p>
-            <motion.div 
-              className="relative flex items-center text-xs sm:text-sm text-slate-400"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.2 }}
-            >
-              <svg
-                className="h-4 w-4 sm:h-5 sm:w-5 mr-1.5 sm:mr-2 flex-shrink-0 text-slate-500"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
+            <div className="absolute -inset-0.5 bg-gradient-to-r from-blue-200 via-indigo-200 to-purple-200 
+              rounded-2xl blur opacity-25 group-hover:opacity-75 transition duration-500" />
+            <div className="relative p-6 bg-white/90 backdrop-blur-xl rounded-2xl
+              border border-slate-200 shadow-[0_8px_30px_rgb(0,0,0,0.08)]
+              group-hover:shadow-[0_8px_30px_rgb(0,0,0,0.12)] transition-all duration-300">
+              <motion.p 
+                className="relative text-base sm:text-lg text-slate-700 leading-relaxed mb-4
+                  whitespace-pre-wrap break-words"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.1 }}
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-                />
-              </svg>
-              <time 
-                dateTime={message.timestamp?.toString()} 
-                title={message.timestamp?.toString()}
-                className="font-medium"
+                {message.text}
+              </motion.p>
+              
+              <motion.div 
+                className="flex items-center justify-between text-sm text-slate-500"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.2 }}
               >
-                {formatRelativeTime(message.timestamp?.toString())}
-              </time>
-            </motion.div>
+                <div className="flex items-center">
+                  <svg
+                    className="h-5 w-5 mr-2 flex-shrink-0 text-slate-400"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                    />
+                  </svg>
+                  <time 
+                    dateTime={message.timestamp}
+                    className="font-medium"
+                  >
+                    {formatRelativeTime(message.timestamp)}
+                  </time>
+                </div>
+              </motion.div>
+            </div>
           </motion.div>
         ))}
       </AnimatePresence>
@@ -181,14 +191,14 @@ const MessageList: React.FC<MessageListProps> = ({ messages, isLoading = false }
           className="text-center py-12 sm:py-16"
         >
           <motion.div 
-            className="inline-flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 
-              rounded-xl sm:rounded-2xl bg-gradient-to-br from-slate-800/50 to-slate-900/50 
-              mb-6 sm:mb-8 border border-slate-700/50"
+            className="inline-flex items-center justify-center w-20 h-20 rounded-2xl 
+              bg-gradient-to-br from-slate-100 to-slate-200 backdrop-blur-xl
+              mb-8 border border-slate-200 shadow-[0_8px_30px_rgb(0,0,0,0.08)]"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
             <svg
-              className="w-8 h-8 sm:w-10 sm:h-10 text-slate-400"
+              className="w-10 h-10 text-slate-400"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -202,8 +212,8 @@ const MessageList: React.FC<MessageListProps> = ({ messages, isLoading = false }
             </svg>
           </motion.div>
           <motion.p 
-            className="text-xl sm:text-2xl font-semibold text-slate-100 mb-2 sm:mb-3
-              bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-indigo-500"
+            className="text-2xl sm:text-3xl font-semibold bg-clip-text text-transparent 
+              bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 mb-3"
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
@@ -211,7 +221,7 @@ const MessageList: React.FC<MessageListProps> = ({ messages, isLoading = false }
             Belum Ada Pesan
           </motion.p>
           <motion.p 
-            className="text-base sm:text-lg text-slate-400"
+            className="text-lg text-slate-500"
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}

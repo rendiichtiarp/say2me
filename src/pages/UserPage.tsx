@@ -184,15 +184,22 @@ const UserPage: React.FC = () => {
   const shareUrl = `${window.location.origin}/p/${username}`;
 
   const ErrorDisplay = ({ error }: { error: ErrorState }) => (
-    <div className="min-h-screen bg-slate-950 flex flex-col items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-950 to-slate-900 flex flex-col items-center justify-center p-4">
+      {/* Background Shapes */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute -top-[40%] -left-[20%] w-[70%] h-[70%] rounded-full bg-blue-500/10 blur-[120px]" />
+        <div className="absolute -bottom-[40%] -right-[20%] w-[70%] h-[70%] rounded-full bg-indigo-500/10 blur-[120px]" />
+      </div>
+
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="text-center max-w-lg mx-auto"
+        className="text-center max-w-lg mx-auto relative"
       >
         <div className="mb-8">
           <motion.div 
-            className="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-slate-800/50 mb-6 border border-slate-700/50"
+            className="inline-flex items-center justify-center w-20 h-20 rounded-2xl 
+              bg-slate-800/30 mb-6 border border-slate-700/30 backdrop-blur-xl"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
@@ -226,18 +233,19 @@ const UserPage: React.FC = () => {
               </svg>
             )}
           </motion.div>
-          <h1 className="text-3xl font-bold text-slate-100 mb-4">
+          <h1 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-indigo-400 mb-4">
             {error.code === 429 ? 'Mohon Tunggu Sebentar' : 'Halaman Tidak Ditemukan'}
           </h1>
-          <p className="text-slate-400 mb-8">
+          <p className="text-slate-300/90 mb-8">
             {error.message}
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
               to="/"
-              className="inline-flex items-center px-6 py-3 text-base font-medium rounded-lg
-                bg-slate-800 hover:bg-slate-700 text-slate-100 
-                transition-all duration-200 border border-slate-700"
+              className="inline-flex items-center px-6 py-3 text-base font-medium rounded-xl
+                backdrop-blur-xl bg-slate-800/30 hover:bg-slate-800/50 text-slate-100 
+                transition-all duration-300 border border-slate-700/30
+                shadow-[0_8px_30px_rgb(0,0,0,0.12)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.18)]"
             >
               <svg
                 className="w-5 h-5 mr-2"
@@ -257,9 +265,10 @@ const UserPage: React.FC = () => {
             {error.code === 429 && (
               <button
                 onClick={() => fetchUserData()}
-                className="inline-flex items-center px-6 py-3 text-base font-medium rounded-lg
-                  bg-blue-600 hover:bg-blue-500 text-white
-                  transition-all duration-200 shadow-lg shadow-blue-500/25"
+                className="inline-flex items-center px-6 py-3 text-base font-medium rounded-xl
+                  bg-gradient-to-r from-blue-500/90 to-indigo-500/90 hover:from-blue-400/90 hover:to-indigo-400/90
+                  text-white transition-all duration-300 backdrop-blur-sm
+                  shadow-[0_0_20px_rgba(59,130,246,0.2)] hover:shadow-[0_0_25px_rgba(59,130,246,0.3)]"
               >
                 <svg
                   className="w-5 h-5 mr-2"
@@ -288,8 +297,14 @@ const UserPage: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-slate-950">
-      <div className="max-w-3xl mx-auto px-4 py-8 sm:py-12 lg:py-16 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-950 to-slate-900">
+      {/* Background Shapes */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute -top-[40%] -left-[20%] w-[70%] h-[70%] rounded-full bg-blue-500/10 blur-[120px]" />
+        <div className="absolute -bottom-[40%] -right-[20%] w-[70%] h-[70%] rounded-full bg-indigo-500/10 blur-[120px]" />
+      </div>
+
+      <div className="max-w-3xl mx-auto px-4 py-8 sm:py-12 lg:py-16 sm:px-6 lg:px-8 relative">
         <div className="space-y-8 sm:space-y-12">
           <motion.div
             initial={{ opacity: 0, y: -20 }}
@@ -297,8 +312,8 @@ const UserPage: React.FC = () => {
             className="text-center"
           >
             <motion.h1 
-              className="text-4xl font-bold text-slate-100 mb-6 bg-clip-text text-transparent 
-                bg-gradient-to-r from-blue-500 to-indigo-500"
+              className="text-5xl sm:text-6xl font-bold bg-clip-text text-transparent 
+                bg-gradient-to-r from-blue-400 to-indigo-400 mb-6 leading-tight py-2"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1 }}
@@ -306,7 +321,7 @@ const UserPage: React.FC = () => {
               @{username}
             </motion.h1>
             <motion.p 
-              className="text-xl text-slate-300 mb-8"
+              className="text-xl text-slate-300/90 mb-8"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
@@ -323,17 +338,18 @@ const UserPage: React.FC = () => {
                     position: 'top-center',
                     icon: '📋',
                     style: {
-                      background: '#1e293b',
+                      background: 'rgba(30, 41, 59, 0.8)',
+                      backdropFilter: 'blur(10px)',
                       color: '#f8fafc',
-                      borderRadius: '0.75rem',
-                      border: '1px solid #334155'
+                      borderRadius: '1rem',
+                      border: '1px solid rgba(51, 65, 85, 0.3)'
                     }
                   });
                 }}
                 className="inline-flex items-center px-6 py-3 text-base font-medium rounded-xl
-                  bg-slate-800/80 hover:bg-slate-800 text-slate-100 
-                  transition-all duration-200 border border-slate-700
-                  backdrop-blur-sm hover:border-slate-600 hover:scale-105"
+                  backdrop-blur-xl bg-slate-800/30 hover:bg-slate-800/50 text-slate-100 
+                  transition-all duration-300 border border-slate-700/30
+                  shadow-[0_8px_30px_rgb(0,0,0,0.12)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.18)]"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3 }}
@@ -378,10 +394,9 @@ const UserPage: React.FC = () => {
                 <Link
                   to="/"
                   className="group inline-flex items-center px-6 py-3 text-base font-medium rounded-xl
-                    bg-gradient-to-r from-blue-600 to-indigo-600 text-white
-                    hover:from-blue-500 hover:to-indigo-500
-                    transition-all duration-200 shadow-lg shadow-blue-500/25
-                    hover:shadow-indigo-500/25"
+                    bg-gradient-to-r from-blue-500/90 to-indigo-500/90 hover:from-blue-400/90 hover:to-indigo-400/90
+                    text-white transition-all duration-300 backdrop-blur-sm
+                    shadow-[0_0_20px_rgba(59,130,246,0.2)] hover:shadow-[0_0_25px_rgba(59,130,246,0.3)]"
                 >
                   <svg
                     className="w-5 h-5 mr-2 transform group-hover:translate-x-1 transition-transform"
@@ -403,8 +418,8 @@ const UserPage: React.FC = () => {
           </motion.div>
 
           <motion.div 
-            className="bg-slate-900/50 rounded-2xl shadow-lg overflow-hidden border border-slate-800
-              backdrop-blur-sm"
+            className="backdrop-blur-xl bg-slate-900/40 rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.12)] 
+              overflow-hidden border border-slate-700/30"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4 }}
@@ -414,11 +429,11 @@ const UserPage: React.FC = () => {
               
               <div className="relative py-4">
                 <div className="absolute inset-0 flex items-center px-8" aria-hidden="true">
-                  <div className="w-full border-t border-slate-800/50"></div>
+                  <div className="w-full border-t border-slate-700/30"></div>
                 </div>
                 <div className="relative flex justify-center">
-                  <span className="px-6 bg-slate-900/90 text-sm font-medium text-slate-400
-                    rounded-full border border-slate-800/50">
+                  <span className="px-6 backdrop-blur-xl bg-slate-900/40 text-sm font-medium text-slate-300/90
+                    rounded-full border border-slate-700/30">
                     Pesan Terbaru
                   </span>
                 </div>
@@ -429,7 +444,7 @@ const UserPage: React.FC = () => {
             
             {hasMore && (
               <motion.div 
-                className="flex justify-center p-6 bg-slate-900/30 border-t border-slate-800/50"
+                className="flex justify-center p-6 backdrop-blur-xl bg-slate-900/30 border-t border-slate-700/30"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.5 }}
@@ -438,10 +453,10 @@ const UserPage: React.FC = () => {
                   onClick={handleLoadMore}
                   disabled={isLoading}
                   className="group inline-flex items-center px-8 py-3 text-base font-medium rounded-xl
-                    bg-slate-800/80 hover:bg-slate-800 text-slate-100 
-                    transition-all duration-200 border border-slate-700
-                    backdrop-blur-sm hover:border-slate-600
-                    disabled:opacity-50 disabled:cursor-not-allowed"
+                    backdrop-blur-xl bg-slate-800/30 hover:bg-slate-800/50 text-slate-100 
+                    transition-all duration-300 border border-slate-700/30
+                    shadow-[0_8px_30px_rgb(0,0,0,0.12)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.18)]
+                    disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:shadow-none"
                 >
                   {isLoading ? (
                     <>
@@ -471,16 +486,18 @@ const UserPage: React.FC = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.5 }}
-        className="mt-12 sm:mt-16 relative overflow-hidden rounded-2xl bg-gradient-to-r 
-          from-blue-600/10 to-indigo-600/10 border border-blue-500/20"
+        className="mt-12 sm:mt-16 mx-4 sm:mx-6 lg:mx-8 relative overflow-hidden rounded-3xl
+          backdrop-blur-xl bg-gradient-to-r from-blue-600/10 to-indigo-600/10 
+          border border-blue-500/20 shadow-[0_8px_30px_rgb(0,0,0,0.12)]"
       >
         <div className="absolute inset-0 bg-grid-white/5 [mask-image:linear-gradient(0deg,transparent,black)]" />
         <div className="relative p-6 sm:p-8 flex flex-col sm:flex-row items-center justify-between gap-6">
           <div className="text-center sm:text-left">
-            <h3 className="text-xl sm:text-2xl font-bold text-slate-100 mb-2">
+            <h3 className="text-xl sm:text-2xl font-bold bg-clip-text text-transparent 
+              bg-gradient-to-r from-blue-400 to-indigo-400 mb-2">
               Ingin Punya Halaman Seperti Ini?
             </h3>
-            <p className="text-slate-400 text-base sm:text-lg">
+            <p className="text-slate-300/90 text-base sm:text-lg">
               Buat halaman anonim Anda sendiri dan bagikan dengan teman-teman!
             </p>
           </div>
@@ -494,10 +511,10 @@ const UserPage: React.FC = () => {
             <Link
               to="/"
               className="group inline-flex items-center px-6 py-3 text-base font-medium rounded-xl
-                bg-gradient-to-r from-blue-600 to-indigo-600 text-white
-                hover:from-blue-500 hover:to-indigo-500 
-                transition-all duration-200 shadow-lg shadow-blue-500/25 
-                hover:shadow-indigo-500/25 whitespace-nowrap"
+                bg-gradient-to-r from-blue-500/90 to-indigo-500/90 hover:from-blue-400/90 hover:to-indigo-400/90
+                text-white transition-all duration-300 backdrop-blur-sm
+                shadow-[0_0_20px_rgba(59,130,246,0.2)] hover:shadow-[0_0_25px_rgba(59,130,246,0.3)]
+                whitespace-nowrap"
             >
               <svg
                 className="w-5 h-5 mr-2 transform group-hover:translate-x-1 transition-transform"

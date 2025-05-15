@@ -282,9 +282,9 @@ app.get('/api/messages', async (req, res) => {
     
     res.json({
       data: rows.map(row => ({
-        id: row.id,
+      id: row.id,
         message_text: row.message_text,
-        timestamp: row.timestamp
+      timestamp: row.timestamp
       }))
     });
   } catch (error) {
@@ -305,47 +305,47 @@ app.post('/api/messages', [
     .withMessage('Pesan harus antara 1-500 karakter')
     .customSanitizer(value => xss(value))
 ], async (req, res) => {
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
     return res.status(400).json({ 
       errors: errors.array(),
       message: 'Validasi gagal'
     });
-  }
-  
-  const { text } = req.body;
-  
-  try {
-    console.log(`Attempting to save message of length: ${text.length}`);
-    
-    const [result] = await pool.query(
-      'INSERT INTO messages (message_text) VALUES (?)',
-      [text]
-    );
-    
-    const [countResult] = await pool.query('SELECT COUNT(*) as count FROM messages');
-    if (countResult[0].count > 10000) {
-      await pool.query(
-        'DELETE FROM messages ORDER BY timestamp ASC LIMIT ?',
-        [countResult[0].count - 10000]
-      );
     }
     
-    res.status(201).json({
+    const { text } = req.body;
+    
+    try {
+    console.log(`Attempting to save message of length: ${text.length}`);
+    
+      const [result] = await pool.query(
+        'INSERT INTO messages (message_text) VALUES (?)',
+        [text]
+      );
+      
+      const [countResult] = await pool.query('SELECT COUNT(*) as count FROM messages');
+      if (countResult[0].count > 10000) {
+        await pool.query(
+          'DELETE FROM messages ORDER BY timestamp ASC LIMIT ?',
+          [countResult[0].count - 10000]
+        );
+      }
+      
+      res.status(201).json({
       data: {
         id: result.insertId,
         message_text: text,
         timestamp: new Date()
       },
       message: 'Pesan berhasil disimpan'
-    });
-  } catch (error) {
-    console.error('Database error:', error);
+      });
+    } catch (error) {
+      console.error('Database error:', error);
     res.status(500).json({ 
       error: 'Gagal menyimpan pesan',
       message: 'Terjadi kesalahan internal'
     });
-  }
+    }
 });
 
 // Error handler
